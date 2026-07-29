@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="ku" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>داونلۆدکردنی ڤیدیۆ و وەسفی پرۆفیشناڵ</title>
+    <style>
+        :root {
+            --primary-color: #6366f1;
+            --primary-hover: #4f46e5;
+            --bg-color: #0f172a;
+            --card-bg: #1e293b;
+            --text-color: #f8fafc;
+            --text-muted: #94a3b8;
+            --border-color: #334155;
+            --accent-color: #10b981;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 750px;
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #4f46e5, #9333ea);
+            padding: 25px 20px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 1.6rem;
+            margin-bottom: 6px;
+            color: #ffffff;
+        }
+
+        .header p {
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+
+        .content {
+            padding: 25px;
+        }
+
+        /* بەشی ڤیدیۆ پلەیەر */
+        .video-container {
+            position: relative;
+            width: 100%;
+            background-color: #000;
+            border-radius: 12px;
+            overflow: hidden;
+            margin-bottom: 20px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
+            border: 1px solid var(--border-color);
+        }
+
+        .video-container video {
+            width: 100%;
+            display: block;
+            max-height: 380px;
+            object-fit: contain;
+        }
+
+        .upload-overlay {
+            padding: 15px;
+            background: rgba(15, 23, 42, 0.9);
+            border-top: 1px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .file-input-wrapper {
+            position: relative;
+            overflow: hidden;
+            display: inline-block;
+        }
+
+        .file-input-wrapper input[type=file] {
+            font-size: 100px;
+            position: absolute;
+            left: 0;
+            top: 0;
+            opacity: 0;
+            cursor: pointer;
+        }
+
+        .btn-upload {
+            background-color: #334155;
+            color: white;
+            padding: 8px 16px;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            cursor: pointer;
+            transition: background 0.3s;
+            border: 1px solid var(--border-color);
+        }
+
+        .btn-upload:hover {
+            background-color: #475569;
+        }
+
+        .video-info {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+
+        /* سندوقی وەسف */
+        .description-box {
+            background-color: var(--bg-color);
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            padding: 18px;
+            margin-bottom: 20px;
+            max-height: 180px;
+            overflow-y: auto;
+            line-height: 1.7;
+            font-size: 0.95rem;
+            color: var(--text-muted);
+            white-space: pre-line;
+            text-align: justify;
+        }
+
+        /* دوگمەکانی کردار */
+        .actions {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            flex: 1;
+            padding: 12px 18px;
+            border: none;
+            border-radius: 8px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            transition: all 0.3s ease;
+            text-decoration: none;
+        }
+
+        .btn-primary {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background-color: var(--primary-hover);
+        }
+
+        .btn-accent {
+            background-color: var(--accent-color);
+            color: white;
+        }
+
+        .btn-accent:hover {
+            background-color: #059669;
+        }
+
+        .btn-secondary {
+            background-color: transparent;
+            border: 1px solid var(--border-color);
+            color: var(--text-color);
+        }
+
+        .btn-secondary:hover {
+            background-color: var(--border-color);
+        }
+
+        @media (max-width: 520px) {
+            .actions {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div class="header">
+            <h1>باشترکردن و داونلۆدکردنی ڤیدیۆ</h1>
+            <p>ڕەوانەکردنی ڤیدیۆ و وەسفی پرۆفیشناڵ بۆ کوالێتی 4K Ultra HD</p>
+        </div>
+        
+        <div class="content">
+            <!-- بەشی پەخشکردن و دانانی ڤیدیۆ -->
+            <div class="video-container">
+                <video id="videoPlayer" controls>
+                    <source src="" id="videoSource">
+                    تۆڕی گەڕۆکەکەت پشتگیری ڤیدیۆ ناکات.
+                </video>
+                <div class="upload-overlay">
+                    <div class="file-input-wrapper">
+                        <button class="btn-upload">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>
+                            هەڵبژاردنی ڤیدیۆ
+                        </button>
+                        <input type="file" id="videoUpload" accept="video/*" onchange="loadVideo(event)">
+                    </div>
+                    <span class="video-info" id="videoInfo">هیچ ڤیدیۆیەک نەبژێردراوە</span>
+                </div>
+            </div>
+
+            <!-- سندوقی دەقی وەسف -->
+            <div class="description-box" id="descText">ئەم ڤیدیۆیە بە شێوەیەکی پرۆفیشناڵ بە 4K Ultra HD (3840×2160) بگۆڕە و زۆرترین کوالێتی پێ ببەخشە. ڕوونی، وردەکاری، ڕەنگەکان، ڕووناکی، کۆنتراست و قووڵایی وێنە بە شێوەیەکی سروشتی و سینەمایی باشتر بکە. تەم، بلور، گرێدانی وێنە، هەڵەکانی کۆمپریسکردن، لەرزین و هەر کێشەیەکی کوالێتی بە تەواوی لابەرە.
+
+هەموو لۆگۆ، واتەرمارک، ناوی کەناڵ، ناوی ئەکاونت، نووسین، هێما، کات و هەر شتێکی زیادە لەسەر ڤیدیۆکە بە تەواوی بسڕەوە، بەبێ ئەوەی شوێن یان ئاسەوارێکی دیار بەمێنێت، و شوێنیان بە شێوەیەکی سروشتی و جوان پڕبکەرەوە.
+
+جوڵەی کامێرا نەرمی پێ ببەخشە (Stabilization)، دڵنیابە لە هاوتاکردنی چوارچێوەکان (Frame Consistency)، دەنگەکەش بە کوالێتی بەرز پارێزە و ئەگەر پێویست بوو پاکی بکەرەوە. ڤیدیۆکە بە هەمان قەبارە و ڕێژەی ڕووی (Aspect Ratio) هەڵبگرە و کۆتایی بە 4K Ultra HD و دەرچوونێکی پاک، پرۆفیشناڵ و سینەمایی هەناردە بکە.</div>
+
+            <!-- دوگمەکانی داونلۆد و کۆپیکردن -->
+            <div class="actions">
+                <button class="btn btn-accent" id="downloadVideoBtn" onclick="downloadVideo()" style="display: none;">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                    داونلۆدی ڤیدیۆکە
+                </button>
+                <button class="btn btn-primary" onclick="downloadText()">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                    داونلۆدی وەسف (TXT)
+                </button>
+                <button class="btn btn-secondary" onclick="copyText()">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                    کۆپیکردنی وەسف
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentVideoBlobUrl = null;
+        let currentVideoName = 'enhanced-video.mp4';
+
+        function loadVideo(event) {
+            const file = event.target.files[0];
+            if (file) {
+                currentVideoName = file.name;
+                currentVideoBlobUrl = URL.createObjectURL(file);
+                
+                const videoPlayer = document.getElementById('videoPlayer');
+                const videoSource = document.getElementById('videoSource');
+                const videoInfo = document.getElementById('videoInfo');
+                const downloadVideoBtn = document.getElementById('downloadVideoBtn');
+
+                videoSource.src = currentVideoBlobUrl;
+                videoPlayer.load();
+                
+                videoInfo.innerText = file.name;
+                downloadVideoBtn.style.display = 'flex';
+            }
+        }
+
+        function downloadVideo() {
+            if (currentVideoBlobUrl) {
+                const a = document.displaycreateElement ? document.createElement('a') : document.createElement('a');
+                a.href = currentVideoBlobUrl;
+                a.download = '4K_' + currentVideoName;
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+            }
+        }
+
+        function downloadText() {
+            const text = document.getElementById('descText').innerText;
+            const blob = new Blob([text], { type: 'text/plain;charset=utf-8' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'video-enhancement-prompt.txt';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        }
+
+        function copyText() {
+            const text = document.getElementById('descText').innerText;
+            navigator.clipboard.writeText(text).then(() => {
+                alert('وەسفەکە سەرکەوتووانە کۆپی کرا!');
+            });
+        }
+    </script>
+</body>
+</html>
