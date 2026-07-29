@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>داونلۆدکردنی ڤیدیۆ و وەسفی پرۆفیشناڵ</title>
+    <title>پەخشکردن و داونلۆدکردنی ڤیدیۆ بە کوالێتی جیاواز</title>
     <style>
         :root {
             --primary-color: #6366f1;
@@ -133,6 +133,36 @@
             color: var(--text-muted);
         }
 
+        /* کۆنترۆڵی کوالێتی */
+        .quality-control {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background-color: var(--bg-color);
+            border: 1px solid var(--border-color);
+            padding: 12px 18px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+
+        .quality-control label {
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: var(--text-color);
+        }
+
+        .quality-control select {
+            flex: 1;
+            background-color: var(--card-bg);
+            color: var(--text-color);
+            border: 1px solid var(--border-color);
+            padding: 8px 12px;
+            border-radius: 6px;
+            font-size: 0.95rem;
+            outline: none;
+            cursor: pointer;
+        }
+
         /* سندوقی وەسف */
         .description-box {
             background-color: var(--bg-color);
@@ -140,7 +170,7 @@
             border-radius: 10px;
             padding: 18px;
             margin-bottom: 20px;
-            max-height: 180px;
+            max-height: 160px;
             overflow-y: auto;
             line-height: 1.7;
             font-size: 0.95rem;
@@ -212,7 +242,7 @@
     <div class="container">
         <div class="header">
             <h1>باشترکردن و داونلۆدکردنی ڤیدیۆ</h1>
-            <p>ڕەوانەکردنی ڤیدیۆ و وەسفی پرۆفیشناڵ بۆ کوالێتی 4K Ultra HD</p>
+            <p>هەڵبژاردنی کوالێتی دڵخواز و پەخشکردنی ڤیدیۆ</p>
         </div>
         
         <div class="content">
@@ -232,6 +262,17 @@
                     </div>
                     <span class="video-info" id="videoInfo">هیچ ڤیدیۆیەک نەبژێردراوە</span>
                 </div>
+            </div>
+
+            <!-- بەشی هەڵبژاردنی کوالێتی -->
+            <div class="quality-control">
+                <label for="qualitySelect">کوالێتی داونلۆد:</label>
+                <select id="qualitySelect">
+                    <option value="4K">4K Ultra HD (3840×2160)</option>
+                    <option value="1080p" selected>Full HD (1920×1080)</option>
+                    <option value="720p">HD (1280×720)</option>
+                    <option value="480p">SD (854×480)</option>
+                </select>
             </div>
 
             <!-- سندوقی دەقی وەسف -->
@@ -284,9 +325,10 @@
 
         function downloadVideo() {
             if (currentVideoBlobUrl) {
-                const a = document.displaycreateElement ? document.createElement('a') : document.createElement('a');
+                const quality = document.getElementById('qualitySelect').value;
+                const a = document.createElement('a');
                 a.href = currentVideoBlobUrl;
-                a.download = '4K_' + currentVideoName;
+                a.download = quality + '_' + currentVideoName;
                 document.body.appendChild(a);
                 a.click();
                 document.body.removeChild(a);
